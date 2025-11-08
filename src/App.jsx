@@ -179,7 +179,7 @@ const data = {
   ],
   publications: [
     {
-      title: 'Machine Learning in Chemical Process Design: A Review',
+      title: 'Simulation Of Coffee Stain Effects Using ANSYS Fluent',
       journal: 'Journal of Physics: Conference Series',
       year: '2019',
       doi: '10.1088/1742-6596/1276/1/012004',
@@ -187,7 +187,7 @@ const data = {
       arxiv: null
     },
     {
-      title: 'Protein Language Models with Diffusion and RAG Integration',
+      title: 'The Study and Optimization Of Production/Fermentation Processes In Biofuel Production',
       journal: 'arXiv preprint',
       year: '2023',
       doi: null,
@@ -195,7 +195,7 @@ const data = {
       arxiv: '2308.00717'
     },
     {
-      title: 'Multimodal RAG for Bioinformatics Data Retrieval',
+      title: 'Implementing Edge Based Object Detection For Microplastic Debris',
       journal: 'arXiv preprint',
       year: '2023',
       doi: null,
