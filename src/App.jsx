@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { GitHub, Linkedin, Mail, FileText } from 'lucide-react';
+import { Github, Linkedin, Mail, FileText } from 'lucide-react';
 
 const data = {
   name: 'Amardeep Singh',
@@ -128,9 +128,9 @@ export default function App() {
           <div>
             <h1 className="text-3xl font-bold">{data.name}</h1>
             <p className="text-sm text-slate-600 mt-1">{data.title}</p>
-            <div className="mt-3 flex gap-3 items-center">
+            <div className="mt-3 flex gap-3 items-center flex-wrap">
               <IconLink href={data.links.linkedin} label="LinkedIn"><Linkedin size={16} /></IconLink>
-              <IconLink href={data.links.github} label="GitHub"><GitHub size={16} /></IconLink>
+              <IconLink href={data.links.github} label="GitHub"><Github size={16} /></IconLink>
               <IconLink href={data.links.arxiv} label="ArXiv"><FileText size={16} /></IconLink>
               <a href={`mailto:${data.email}`} className="inline-flex items-center gap-2 px-3 py-2 rounded-md hover:bg-slate-100"><Mail size={16} /> <span className="text-sm">{data.email}</span></a>
             </div>
@@ -213,7 +213,7 @@ export default function App() {
             <p className="text-sm text-slate-600 mt-2">{data.phone}</p>
             <p className="text-sm text-slate-600">{data.email}</p>
             <div className="mt-3 flex gap-2">
-              <a href={data.links.github} target="_blank" rel="noreferrer" className="px-3 py-2 bg-black text-white rounded inline-flex items-center gap-2"><GitHub size={14}/> GitHub</a>
+              <a href={data.links.github} target="_blank" rel="noreferrer" className="px-3 py-2 bg-black text-white rounded inline-flex items-center gap-2"><Github size={14}/> GitHub</a>
               <a href={data.links.linkedin} target="_blank" rel="noreferrer" className="px-3 py-2 border rounded inline-flex items-center gap-2"><Linkedin size={14}/> LinkedIn</a>
             </div>
           </motion.div>
