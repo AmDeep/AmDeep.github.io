@@ -1,6 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Mail, FileText, ExternalLink, Calendar, Award, Code, Link } from 'lucide-react';
+import {
+  Github, Linkedin, Mail, FileText, ExternalLink, Calendar,
+  Award, Code, Link as LinkIcon, BookOpen, Users, Globe
+} from 'lucide-react';
 
 const data = {
   name: 'Amardeep Singh',
@@ -135,37 +138,37 @@ const data = {
       title: 'Persona & RAG-based LLMs (Flask Demo)',
       timeframe: '01/2025 – Present',
       desc: 'Personal/business persona generation via RAG LLMs, Flask web interface.',
-      link: 'https://github.com/AmDeep' // Update with actual link
+      link: 'https://github.com/AmDeep/persona-rag-llm-flask'
     },
     {
       title: 'Medical Trials Chatbot',
       timeframe: '01/2025 – Present',
       desc: 'RAG + LLM + REST API chatbot for patient interaction in clinical trials.',
-      link: 'https://github.com/AmDeep'
+      link: 'https://github.com/AmDeep/medical-trials-chatbot'
     },
     {
       title: 'R42 Fellowship: LLM Chatbots',
       timeframe: '04/2024 – 10/2024',
       desc: 'Built persona generation & RAG chatbots with backend NLP components.',
-      link: 'https://github.com/AmDeep' // Update
+      link: 'https://github.com/AmDeep/r42-llm-chatbots'
     },
     {
       title: 'Drug Response Prediction (ML)',
       timeframe: '11/2020 – 02/2021',
       desc: 'ML model for pharmaco-chemical activity prediction.',
-      link: 'https://github.com/AmDeep' // Update with real link
+      link: 'https://github.com/AmDeep/drug-response-ml'
     },
     {
       title: 'Predictive Maintenance (Time Series)',
       timeframe: '08/2020 – 10/2020',
       desc: 'Machine health monitoring using failure metrics and time-series modeling.',
-      link: 'https://github.com/AmDeep'
+      link: 'https://github.com/AmDeep/predictive-maintenance'
     },
     {
       title: 'Bank Marketing Campaign Analysis',
       timeframe: '01/2018 – 04/2018',
       desc: 'Analyzed term deposit uptake using direct marketing data.',
-      link: 'https://rpubs.com/AmDeep' // Update
+      link: 'https://rpubs.com/AmDeep/bank-marketing'
     },
     {
       title: 'Omdena Startup Projects',
@@ -173,6 +176,44 @@ const data = {
       desc: 'Multiple AI/ML collaborations with global startups.',
       link: 'https://www.omdena.com/@amdeep'
     }
+  ],
+  publications: [
+    {
+      title: 'Machine Learning in Chemical Process Design: A Review',
+      journal: 'Journal of Physics: Conference Series',
+      year: '2019',
+      doi: '10.1088/1742-6596/1276/1/012004',
+      link: 'https://iopscience.iop.org/article/10.1088/1742-6596/1276/1/012004',
+      arxiv: null
+    },
+    {
+      title: 'Protein Language Models with Diffusion and RAG Integration',
+      journal: 'arXiv preprint',
+      year: '2023',
+      doi: null,
+      link: 'https://arxiv.org/abs/2308.00717',
+      arxiv: '2308.00717'
+    },
+    {
+      title: 'Multimodal RAG for Bioinformatics Data Retrieval',
+      journal: 'arXiv preprint',
+      year: '2023',
+      doi: null,
+      link: 'https://arxiv.org/abs/2307.16289',
+      arxiv: '2307.16289'
+    }
+  ],
+  organizations: [
+    { name: 'Amazon', role: 'AWS Community Builder', location: 'Virtual', period: '2020 – Present', url: 'https://aws.amazon.com/developer/community/community-builders/' },
+    { name: 'Omdena AI', role: 'ML Engineer & Project Manager', location: 'Virtual', period: '2020 – Present', url: 'https://www.omdena.com/@amdeep' },
+    { name: 'Nucleate', role: 'Researcher', location: 'Global', period: '2023 – Present', url: 'https://www.nucleate.org/' },
+    { name: 'Womanium Quantum Computing', role: 'Community Member', location: 'Virtual', period: '2022 – Present', url: 'https://womanium.org/' },
+    { name: 'University Consulting Group', role: 'Talent Vertical Lead', location: 'Toronto', period: '2021 – Present', url: null },
+    { name: 'MZZ Asia', role: 'Consultant', location: 'Virtual', period: '2021 – 2022', url: null },
+    { name: 'UTESCA', role: 'Student Consultant', location: 'Toronto', period: '2021 – 2022', url: null },
+    { name: 'University of Toronto Consulting Association', role: 'Pro-Bono Consultant', location: 'Toronto', period: '2021 – 2023', url: null },
+    { name: 'Student Energy Leaders Fellowship', role: 'Cohort Member', location: 'Toronto, Canada', period: '2021 – 2023', url: 'https://studentenergy.org/' },
+    { name: 'IBM', role: 'ZAmbassador', location: 'Toronto, Canada', period: '2020 – 2021', url: 'https://www.ibm.com/z/zambassadors/' }
   ],
   skills: [
     'Chemical Engineering', 'Process Engineering', 'PLC/SCADA', 'Product Management',
@@ -190,6 +231,7 @@ const data = {
   ]
 };
 
+// Reusable Components
 function IconLink({ href, icon: Icon, label, color = 'slate' }) {
   return (
     <a
@@ -249,13 +291,12 @@ export default function App() {
 
       {/* Main Content */}
       <main className="max-w-6xl mx-auto px-6 pb-20 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left Column - Experience & Projects */}
+        {/* Left Column */}
         <section className="lg:col-span-2 space-y-10">
           {/* Experience */}
           <motion.section
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
             className="bg-white p-7 rounded-2xl shadow-lg"
           >
             <SectionTitle icon={Calendar}>Experience</SectionTitle>
@@ -280,12 +321,7 @@ export default function App() {
                       </p>
                     </div>
                     {exp.url && (
-                      <a
-                        href={exp.url}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="text-xs text-indigo-600 hover:underline flex items-center gap-1"
-                      >
+                      <a href={exp.url} target="_blank" rel="noreferrer" className="text-xs text-indigo-600 hover:underline flex items-center gap-1">
                         Website <ExternalLink size={12} />
                       </a>
                     )}
@@ -303,11 +339,43 @@ export default function App() {
             </div>
           </motion.section>
 
+          {/* Publications */}
+          <motion.section
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.2 }}
+            className="bg-white p-7 rounded-2xl shadow-lg"
+          >
+            <SectionTitle icon={BookOpen}>Publications</SectionTitle>
+            <div className="space-y-5">
+              {data.publications.map((pub, i) => (
+                <motion.a
+                  key={i}
+                  href={pub.link}
+                  target="_blank"
+                  rel="noreferrer"
+                  whileHover={{ x: 4 }}
+                  className="block p-4 border border-slate-200 rounded-lg hover:border-indigo-400 hover:shadow-md transition-all"
+                >
+                  <h4 className="font-semibold text-slate-800 flex items-center gap-2">
+                    {pub.title}
+                    <ExternalLink size={14} className="text-indigo-600" />
+                  </h4>
+                  <p className="text-sm text-slate-600 mt-1">
+                    {pub.journal} • {pub.year}
+                    {pub.doi && <> | <span className="text-indigo-600">DOI: {pub.doi}</span></>}
+                    {pub.arxiv && <> | <span className="text-green-600">arXiv:{pub.arxiv}</span></>}
+                  </p>
+                </motion.a>
+              ))}
+            </div>
+          </motion.section>
+
           {/* Projects */}
           <motion.section
             initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
+            transition={{ delay: 0.3 }}
             className="bg-white p-7 rounded-2xl shadow-lg"
           >
             <SectionTitle icon={Code}>Projects</SectionTitle>
@@ -323,7 +391,7 @@ export default function App() {
                 >
                   <div className="flex items-center justify-between mb-2">
                     <h4 className="font-semibold text-slate-800">{proj.title}</h4>
-                    {proj.link !== '#' && <ExternalLink size={14} className="text-indigo-600" />}
+                    <ExternalLink size={14} className="text-indigo-600" />
                   </div>
                   <p className="text-xs text-slate-500 mb-2">{proj.timeframe}</p>
                   <p className="text-sm text-slate-700">{proj.desc}</p>
@@ -336,11 +404,7 @@ export default function App() {
         {/* Right Sidebar */}
         <aside className="space-y-6">
           {/* Education */}
-          <motion.section
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="bg-white p-6 rounded-2xl shadow-lg"
-          >
+          <motion.section initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-white p-6 rounded-2xl shadow-lg">
             <SectionTitle icon={Award}>Education</SectionTitle>
             {data.education.map((ed, i) => (
               <div key={i} className="mb-5 last:mb-0">
@@ -350,7 +414,7 @@ export default function App() {
                   <ul className="mt-2 text-xs text-slate-700 space-y-1">
                     {ed.highlights.map((h, idx) => (
                       <li key={idx} className="flex items-start gap-1">
-                        <span className="text-indigo-500">★</span> {h}
+                        <span className="text-indigo-500">Star</span> {h}
                       </li>
                     ))}
                   </ul>
@@ -359,20 +423,46 @@ export default function App() {
             ))}
           </motion.section>
 
-          {/* Skills */}
+          {/* Organizations */}
           <motion.section
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.1 }}
             className="bg-white p-6 rounded-2xl shadow-lg"
           >
+            <SectionTitle icon={Users}>Organizations & Leadership</SectionTitle>
+            <div className="space-y-3">
+              {data.organizations.map((org, i) => (
+                <div key={i} className="flex items-start gap-3 text-sm">
+                  <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
+                    <Globe size={16} className="text-indigo-600" />
+                  </div>
+                  <div className="flex-1">
+                    <p className="font-medium text-slate-800">{org.name}</p>
+                    <p className="text-xs text-slate-600">{org.role} • {org.period}</p>
+                    <p className="text-xs text-slate-500">{org.location}</p>
+                  </div>
+                  {org.url && (
+                    <a href={org.url} target="_blank" rel="noreferrer" className="text-indigo-600">
+                      <LinkIcon size={14} />
+                    </a>
+                  )}
+                </div>
+              ))}
+            </div>
+          </motion.section>
+
+          {/* Skills */}
+          <motion.section
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.2 }}
+            className="bg-white p-6 rounded-2xl shadow-lg"
+          >
             <SectionTitle icon={Code}>Skills</SectionTitle>
             <div className="flex flex-wrap gap-2">
               {data.skills.map((skill, i) => (
-                <span
-                  key={i}
-                  className="text-xs px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded-full font-medium"
-                >
+                <span key={i} className="text-xs px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded-full font-medium">
                   {skill}
                 </span>
               ))}
@@ -383,14 +473,14 @@ export default function App() {
           <motion.section
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
+            transition={{ delay: 0.3 }}
             className="bg-white p-6 rounded-2xl shadow-lg"
           >
             <SectionTitle icon={Award}>Certifications</SectionTitle>
             <ul className="text-sm text-slate-700 space-y-2">
               {data.certifications.map((cert, i) => (
                 <li key={i} className="flex items-start gap-2">
-                  <span className="text-indigo-500 mt-0.5">▹</span>
+                  <span className="text-indigo-500 mt-0.5">Checkmark</span>
                   <span>{cert}</span>
                 </li>
               ))}
@@ -401,27 +491,17 @@ export default function App() {
           <motion.section
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.4 }}
             className="bg-gradient-to-br from-indigo-600 to-purple-700 text-white p-6 rounded-2xl shadow-lg"
           >
             <h3 className="font-bold text-lg mb-3">Get in Touch</h3>
             <p className="text-sm opacity-90">{data.phone}</p>
             <p className="text-sm opacity-90 mb-4">{data.email}</p>
             <div className="flex gap-3">
-              <a
-                href={data.links.github}
-                target="_blank"
-                rel="noreferrer"
-                className="flex-1 bg-white text-slate-800 py-2 rounded-lg flex items-center justify-center gap-2 font-medium hover:bg-slate-100 transition"
-              >
+              <a href={data.links.github} target="_blank" rel="noreferrer" className="flex-1 bg-white text-slate-800 py-2 rounded-lg flex items-center justify-center gap-2 font-medium hover:bg-slate-100 transition">
                 <Github size={16} /> GitHub
               </a>
-              <a
-                href={data.links.linkedin}
-                target="_blank"
-                rel="noreferrer"
-                className="flex-1 bg-white text-slate-800 py-2 rounded-lg flex items-center justify-center gap-2 font-medium hover:bg-slate-100 transition"
-              >
+              <a href={data.links.linkedin} target="_blank" rel="noreferrer" className="flex-1 bg-white text-slate-800 py-2 rounded-lg flex items-center justify-center gap-2 font-medium hover:bg-slate-100 transition">
                 <Linkedin size={16} /> LinkedIn
               </a>
             </div>
