@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import {
   Github, Linkedin, Mail, FileText, ExternalLink, Calendar,
@@ -15,7 +15,8 @@ const data = {
     github: 'https://github.com/AmDeep',
     certificates: 'https://github.com/AmDeep/Certificates',
     devpost: 'https://devpost.com/AmDeep',
-    arxiv: 'https://arxiv.org/abs/2308.00717'
+    arxiv: 'https://arxiv.org/abs/2308.00717',
+    scholar: 'https://scholar.google.ca/citations?user=GgK_hZEAAAAJ&hl=en'
   },
   education: [
     {
@@ -134,47 +135,80 @@ const data = {
     }
   ],
   projects: [
+    // New Hackathon Projects
+    {
+      title: 'Themis - Legal Document Parser',
+      timeframe: '2020',
+      desc: 'Startup that assists legal teams with automated document parsing and drafting. Won 1st Place at UofT Hatchery.',
+      amount: 'CAD 20,000',
+      link: null, // Add link if available
+      tags: ['Hackathon', 'LegalTech', 'Startup']
+    },
+    {
+      title: 'Altereco',
+      timeframe: '2020',
+      desc: 'Sustainable finance application focused on greener shopping alternatives. Won 1st Place at RBC Hackathon.',
+      amount: 'CAD 6,000',
+      link: null,
+      tags: ['Hackathon', 'FinTech', 'Sustainability']
+    },
+    {
+      title: 'Snowbirds Travel Assistant',
+      timeframe: '2025',
+      desc: 'Travellers application designed for Snowbirds. Won CAD 20,000 at Fintech Cadence.',
+      amount: 'CAD 20,000',
+      link: null,
+      tags: ['Hackathon', 'FinTech', 'Travel']
+    },
+    // Existing Projects
     {
       title: 'Persona & RAG-based LLMs (Flask Demo)',
       timeframe: '01/2025 – Present',
       desc: 'Personal/business persona generation via RAG LLMs, Flask web interface.',
-      link: 'https://github.com/AmDeep/persona-rag-llm-flask'
+      link: 'https://github.com/AmDeep/persona-rag-llm-flask',
+      tags: ['AI', 'RAG', 'LLM']
     },
     {
       title: 'Medical Trials Chatbot',
       timeframe: '01/2025 – Present',
       desc: 'RAG + LLM + REST API chatbot for patient interaction in clinical trials.',
-      link: 'https://github.com/AmDeep/medical-trials-chatbot'
+      link: 'https://github.com/AmDeep/medical-trials-chatbot',
+      tags: ['AI', 'Healthcare']
     },
     {
       title: 'R42 Fellowship: LLM Chatbots',
       timeframe: '04/2024 – 10/2024',
       desc: 'Built persona generation & RAG chatbots with backend NLP components.',
-      link: 'https://github.com/AmDeep/r42-llm-chatbots'
+      link: 'https://github.com/AmDeep/r42-llm-chatbots',
+      tags: ['AI', 'LLM']
     },
     {
       title: 'Drug Response Prediction (ML)',
       timeframe: '11/2020 – 02/2021',
       desc: 'ML model for pharmaco-chemical activity prediction.',
-      link: 'https://github.com/AmDeep/drug-response-ml'
+      link: 'https://github.com/AmDeep/drug-response-ml',
+      tags: ['ML']
     },
     {
       title: 'Predictive Maintenance (Time Series)',
       timeframe: '08/2020 – 10/2020',
       desc: 'Machine health monitoring using failure metrics and time-series modeling.',
-      link: 'https://github.com/AmDeep/predictive-maintenance'
+      link: 'https://github.com/AmDeep/predictive-maintenance',
+      tags: ['ML']
     },
     {
       title: 'Bank Marketing Campaign Analysis',
       timeframe: '01/2018 – 04/2018',
       desc: 'Analyzed term deposit uptake using direct marketing data.',
-      link: 'https://rpubs.com/AmDeep/bank-marketing'
+      link: 'https://rpubs.com/AmDeep/bank-marketing',
+      tags: ['Data Analysis']
     },
     {
       title: 'Omdena Startup Projects',
       timeframe: 'Ongoing',
       desc: 'Multiple AI/ML collaborations with global startups.',
-      link: 'https://www.omdena.com/@amdeep'
+      link: 'https://www.omdena.com/@amdeep',
+      tags: ['AI', 'Collaboration']
     }
   ],
   publications: [
@@ -255,7 +289,16 @@ function SectionTitle({ children, icon: Icon }) {
   );
 }
 
+const tabs = [
+  { id: 'overview', label: 'Overview', icon: Globe },
+  { id: 'experience', label: 'Experience', icon: Calendar },
+  { id: 'projects', label: 'Projects', icon: Code },
+  { id: 'publications', label: 'Publications', icon: BookOpen },
+];
+
 export default function App() {
+  const [activeTab, setActiveTab] = useState('overview');
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 to-indigo-50 text-slate-800 font-sans">
       {/* Header */}
@@ -280,6 +323,7 @@ export default function App() {
               <IconLink href={data.links.certificates} icon={FileText} label="Certificates" />
               <IconLink href={data.links.devpost} icon={Code} label="Devpost" />
               <IconLink href={data.links.arxiv} icon={FileText} label="ArXiv" color="green" />
+              <IconLink href={data.links.scholar} icon={BookOpen} label="Google Scholar" color="blue" />
               <a href={`mailto:${data.email}`} className="inline-flex items-center gap-2 px-3 py-1.5 rounded-lg text-sm font-medium hover:bg-rose-100 hover:scale-105 transition-all">
                 <Mail size={15} className="text-rose-600" />
                 <span>{data.email}</span>
@@ -287,26 +331,130 @@ export default function App() {
             </div>
           </div>
         </motion.div>
+
+        {/* Tab Navigation */}
+        <div className="mt-10 border-b border-slate-200">
+          <nav className="flex gap-2 flex-wrap">
+            {tabs.map((tab) => {
+              const Icon = tab.icon;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className={`flex items-center gap-2 px-6 py-3 text-sm font-medium rounded-t-xl transition-all ${
+                    activeTab === tab.id
+                      ? 'bg-white text-indigo-700 border border-b-0 border-slate-200 shadow-sm'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+                  }`}
+                >
+                  <Icon size={18} />
+                  {tab.label}
+                </button>
+              );
+            })}
+          </nav>
+        </div>
       </header>
 
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-6 pb-20 grid grid-cols-1 lg:grid-cols-3 gap-8">
-        {/* Left Column */}
-        <section className="lg:col-span-2 space-y-10">
-          {/* Experience */}
+      <main className="max-w-6xl mx-auto px-6 pb-20">
+        {/* Overview Tab */}
+        {activeTab === 'overview' && (
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {/* Left Column */}
+            <section className="lg:col-span-2 space-y-10">
+              {/* Experience Summary */}
+              <motion.section
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="bg-white p-7 rounded-2xl shadow-lg"
+              >
+                <SectionTitle icon={Calendar}>Experience</SectionTitle>
+                <div className="space-y-7">
+                  {data.experience.slice(0, 3).map((exp, idx) => ( // Show first 3 in overview
+                    <motion.div key={idx} className="relative pl-6 border-l-2 border-indigo-200">
+                      <div className="absolute -left-2 top-1 w-4 h-4 bg-indigo-500 rounded-full"></div>
+                      <h3 className="font-semibold">{exp.role} @ {exp.company}</h3>
+                      <p className="text-sm text-slate-500">{exp.period}</p>
+                    </motion.div>
+                  ))}
+                </div>
+              </motion.section>
+
+              {/* Featured Projects */}
+              <motion.section
+                initial={{ opacity: 0, x: -30 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="bg-white p-7 rounded-2xl shadow-lg"
+              >
+                <div className="flex justify-between items-center mb-5">
+                  <SectionTitle icon={Code}>Featured Projects</SectionTitle>
+                  <button
+                    onClick={() => setActiveTab('projects')}
+                    className="text-indigo-600 hover:underline text-sm flex items-center gap-1"
+                  >
+                    View All Projects <ExternalLink size={14} />
+                  </button>
+                </div>
+                <div className="grid sm:grid-cols-2 gap-5">
+                  {data.projects.slice(0, 4).map((proj, i) => (
+                    <motion.a
+                      key={i}
+                      href={proj.link || '#'}
+                      target={proj.link ? "_blank" : undefined}
+                      rel="noreferrer"
+                      whileHover={{ y: -4 }}
+                      className="block p-5 bg-gradient-to-br from-slate-50 to-indigo-50 rounded-xl border border-slate-200 hover:shadow-xl transition-all"
+                    >
+                      <h4 className="font-semibold text-slate-800">{proj.title}</h4>
+                      <p className="text-xs text-slate-500 mt-1">{proj.timeframe}</p>
+                      <p className="text-sm text-slate-700 mt-2 line-clamp-3">{proj.desc}</p>
+                      {proj.amount && <p className="text-emerald-600 text-xs mt-2 font-medium">{proj.amount}</p>}
+                    </motion.a>
+                  ))}
+                </div>
+              </motion.section>
+            </section>
+
+            {/* Right Sidebar - Overview */}
+            <aside className="space-y-6">
+              <motion.section initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-white p-6 rounded-2xl shadow-lg">
+                <SectionTitle icon={Award}>Education</SectionTitle>
+                {data.education.map((ed, i) => (
+                  <div key={i} className="mb-5 last:mb-0">
+                    <h4 className="font-semibold text-slate-800">{ed.degree}</h4>
+                    <p className="text-sm text-slate-600">{ed.institution}</p>
+                  </div>
+                ))}
+              </motion.section>
+
+              <motion.section className="bg-white p-6 rounded-2xl shadow-lg">
+                <SectionTitle icon={Users}>Organizations</SectionTitle>
+                <div className="space-y-3 text-sm">
+                  {data.organizations.slice(0, 5).map((org, i) => (
+                    <div key={i}>{org.name} — {org.role}</div>
+                  ))}
+                </div>
+              </motion.section>
+            </aside>
+          </div>
+        )}
+
+        {/* Experience Tab */}
+        {activeTab === 'experience' && (
           <motion.section
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             className="bg-white p-7 rounded-2xl shadow-lg"
           >
             <SectionTitle icon={Calendar}>Experience</SectionTitle>
-            <div className="space-y-7">
+            <div className="space-y-8">
               {data.experience.map((exp, idx) => (
                 <motion.div
                   key={idx}
                   initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: idx * 0.1 }}
+                  transition={{ delay: idx * 0.05 }}
                   className="relative pl-6 border-l-2 border-indigo-200 hover:border-indigo-500 transition-colors"
                 >
                   <div className="absolute -left-2 top-1 w-4 h-4 bg-indigo-500 rounded-full"></div>
@@ -338,12 +486,72 @@ export default function App() {
               ))}
             </div>
           </motion.section>
+        )}
 
-          {/* Publications */}
+        {/* Projects Tab - Detailed View */}
+        {activeTab === 'projects' && (
           <motion.section
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-white p-8 rounded-2xl shadow-lg"
+          >
+            <SectionTitle icon={Code}>Projects</SectionTitle>
+            <p className="text-slate-600 mb-8">Click on any project to visit its repository or demo. More projects can be added easily in the data object.</p>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              {data.projects.map((proj, i) => (
+                <motion.div
+                  key={i}
+                  whileHover={{ scale: 1.02 }}
+                  className="border border-slate-200 rounded-2xl p-6 hover:border-indigo-300 hover:shadow-xl transition-all group"
+                >
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="font-semibold text-xl text-slate-800 group-hover:text-indigo-700 transition-colors">
+                        {proj.title}
+                      </h3>
+                      <p className="text-sm text-slate-500 mt-1">{proj.timeframe}</p>
+                    </div>
+                    {proj.amount && (
+                      <span className="px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-medium rounded-full">
+                        {proj.amount}
+                      </span>
+                    )}
+                  </div>
+
+                  <p className="mt-4 text-slate-700 leading-relaxed">{proj.desc}</p>
+
+                  {proj.tags && (
+                    <div className="flex flex-wrap gap-2 mt-4">
+                      {proj.tags.map((tag, idx) => (
+                        <span key={idx} className="text-[10px] px-2.5 py-1 bg-slate-100 text-slate-600 rounded-full">
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  )}
+
+                  {proj.link && (
+                    <a
+                      href={proj.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="mt-6 inline-flex items-center gap-2 text-indigo-600 hover:text-indigo-700 font-medium text-sm"
+                    >
+                      View Project <ExternalLink size={16} />
+                    </a>
+                  )}
+                </motion.div>
+              ))}
+            </div>
+          </motion.section>
+        )}
+
+        {/* Publications Tab */}
+        {activeTab === 'publications' && (
+          <motion.section
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
             className="bg-white p-7 rounded-2xl shadow-lg"
           >
             <SectionTitle icon={BookOpen}>Publications</SectionTitle>
@@ -370,143 +578,7 @@ export default function App() {
               ))}
             </div>
           </motion.section>
-
-          {/* Projects */}
-          <motion.section
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.3 }}
-            className="bg-white p-7 rounded-2xl shadow-lg"
-          >
-            <SectionTitle icon={Code}>Projects</SectionTitle>
-            <div className="grid sm:grid-cols-2 gap-5">
-              {data.projects.map((proj, i) => (
-                <motion.a
-                  key={i}
-                  href={proj.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  whileHover={{ y: -8, scale: 1.02 }}
-                  className="block p-5 bg-gradient-to-br from-slate-50 to-indigo-50 rounded-xl border border-slate-200 hover:shadow-xl transition-all"
-                >
-                  <div className="flex items-center justify-between mb-2">
-                    <h4 className="font-semibold text-slate-800">{proj.title}</h4>
-                    <ExternalLink size={14} className="text-indigo-600" />
-                  </div>
-                  <p className="text-xs text-slate-500 mb-2">{proj.timeframe}</p>
-                  <p className="text-sm text-slate-700">{proj.desc}</p>
-                </motion.a>
-              ))}
-            </div>
-          </motion.section>
-        </section>
-
-        {/* Right Sidebar */}
-        <aside className="space-y-6">
-          {/* Education */}
-          <motion.section initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} className="bg-white p-6 rounded-2xl shadow-lg">
-            <SectionTitle icon={Award}>Education</SectionTitle>
-            {data.education.map((ed, i) => (
-              <div key={i} className="mb-5 last:mb-0">
-                <h4 className="font-semibold text-slate-800">{ed.degree}</h4>
-                <p className="text-sm text-slate-600">{ed.institution}</p>
-                {ed.highlights.length > 0 && (
-                  <ul className="mt-2 text-xs text-slate-700 space-y-1">
-                    {ed.highlights.map((h, idx) => (
-                      <li key={idx} className="flex items-start gap-1">
-                        <span className="text-indigo-500">Star</span> {h}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            ))}
-          </motion.section>
-
-          {/* Organizations */}
-          <motion.section
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.1 }}
-            className="bg-white p-6 rounded-2xl shadow-lg"
-          >
-            <SectionTitle icon={Users}>Organizations & Leadership</SectionTitle>
-            <div className="space-y-3">
-              {data.organizations.map((org, i) => (
-                <div key={i} className="flex items-start gap-3 text-sm">
-                  <div className="w-10 h-10 bg-indigo-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <Globe size={16} className="text-indigo-600" />
-                  </div>
-                  <div className="flex-1">
-                    <p className="font-medium text-slate-800">{org.name}</p>
-                    <p className="text-xs text-slate-600">{org.role} • {org.period}</p>
-                    <p className="text-xs text-slate-500">{org.location}</p>
-                  </div>
-                  {org.url && (
-                    <a href={org.url} target="_blank" rel="noreferrer" className="text-indigo-600">
-                      <LinkIcon size={14} />
-                    </a>
-                  )}
-                </div>
-              ))}
-            </div>
-          </motion.section>
-
-          {/* Skills */}
-          <motion.section
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.2 }}
-            className="bg-white p-6 rounded-2xl shadow-lg"
-          >
-            <SectionTitle icon={Code}>Skills</SectionTitle>
-            <div className="flex flex-wrap gap-2">
-              {data.skills.map((skill, i) => (
-                <span key={i} className="text-xs px-3 py-1.5 bg-indigo-100 text-indigo-700 rounded-full font-medium">
-                  {skill}
-                </span>
-              ))}
-            </div>
-          </motion.section>
-
-          {/* Certifications */}
-          <motion.section
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ delay: 0.3 }}
-            className="bg-white p-6 rounded-2xl shadow-lg"
-          >
-            <SectionTitle icon={Award}>Certifications</SectionTitle>
-            <ul className="text-sm text-slate-700 space-y-2">
-              {data.certifications.map((cert, i) => (
-                <li key={i} className="flex items-start gap-2">
-                  <span className="text-indigo-500 mt-0.5">Checkmark</span>
-                  <span>{cert}</span>
-                </li>
-              ))}
-            </ul>
-          </motion.section>
-
-          {/* Contact */}
-          <motion.section
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="bg-gradient-to-br from-indigo-600 to-purple-700 text-white p-6 rounded-2xl shadow-lg"
-          >
-            <h3 className="font-bold text-lg mb-3">Get in Touch</h3>
-            <p className="text-sm opacity-90">{data.phone}</p>
-            <p className="text-sm opacity-90 mb-4">{data.email}</p>
-            <div className="flex gap-3">
-              <a href={data.links.github} target="_blank" rel="noreferrer" className="flex-1 bg-white text-slate-800 py-2 rounded-lg flex items-center justify-center gap-2 font-medium hover:bg-slate-100 transition">
-                <Github size={16} /> GitHub
-              </a>
-              <a href={data.links.linkedin} target="_blank" rel="noreferrer" className="flex-1 bg-white text-slate-800 py-2 rounded-lg flex items-center justify-center gap-2 font-medium hover:bg-slate-100 transition">
-                <Linkedin size={16} /> LinkedIn
-              </a>
-            </div>
-          </motion.section>
-        </aside>
+        )}
       </main>
 
       {/* Footer */}
